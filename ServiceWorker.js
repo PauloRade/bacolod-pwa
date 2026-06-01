@@ -1,9 +1,9 @@
 const cacheName = "DefaultCompany-bacolod-project-frontend-0.1.0";
 const contentToCache = [
     "Build/bacolod-web-build.loader.js",
-    "Build/bacolod-web-build.framework.js.br",
-    "Build/bacolod-web-build.data.br",
-    "Build/bacolod-web-build.wasm.br",
+    "Build/bacolod-web-build.framework.js.unityweb",
+    "Build/bacolod-web-build.data.unityweb",
+    "Build/bacolod-web-build.wasm.unityweb",
     "TemplateData/style.css"
 
 ];
