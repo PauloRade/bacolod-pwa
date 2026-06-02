@@ -20,14 +20,28 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('fetch', function (e) {
     e.respondWith((async function () {
-      let response = await caches.match(e.request);
-      console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-      if (response) { return response; }
-
-      response = await fetch(e.request);
-      const cache = await caches.open(cacheName);
-      console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-      cache.put(e.request, response.clone());
-      return response;
+      try {
+        // 1. Try to fetch from the network first
+        console.log(`[Service Worker] Fetching from network: ${e.request.url}`);
+        const response = await fetch(e.request);
+        
+        // 2. If network request is successful, update the cache with the new version
+        const cache = await caches.open(cacheName);
+        console.log(`[Service Worker] Updating cache: ${e.request.url}`);
+        cache.put(e.request, response.clone());
+        
+        return response;
+      } catch (error) {
+        // 3. If network fails (offline), fallback to the cache
+        console.log(`[Service Worker] Network failed, looking in cache: ${e.request.url}`);
+        const cachedResponse = await caches.match(e.request);
+        
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        
+        // If it's not in the network and not in the cache, throw the error
+        throw error;
+      }
     })());
 });
