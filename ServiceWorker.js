@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-bacolod-project-frontend-0.1.0";
+const cacheName = "DefaultCompany-bacolod-project-frontend-0.0.3";
 const contentToCache = [
     "Build/bacolod-web-build.loader.js",
     "Build/bacolod-web-build.framework.js.unityweb",
